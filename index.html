@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miau poster- Tienda de Posters de Gatos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navegación -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <!-- Logo cambiado de texto a imagen para que sea fácilmente modificable -->
+                <img src="images/logo.png" alt="Paw Posters Logo" class="logo-img">
+                <h1>MIAU POSTER</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#about">Sobre Nosotros</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div class="cart-icon">
+                <span class="cart-count">0</span>
+                🛒
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <img src="images/hero-image.jpg" alt="Gatos adorables" class="hero-image">
+            <!-- Agregar clase elegante al título y permitir edición -->
+            <h2 class="hero-title">POSTERS PARA TODOS</h2>
+            <p>Descubre nuestra colección exclusiva de posters de gatos adorables</p>
+            <button class="cta-button" onclick="scrollToCategories()">Explorar Categorías</button>
+        </div>
+    </section>
+
+    <!-- Categorías Section -->
+    <section class="categorias" id="categorias">
+        <h2>Nuestras Categorías</h2>
+        <div class="categorias-grid">
+            <a href="categorias/clasicos.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-clasicos.jpg" alt="Gatos Clásicos">
+                </div>
+                <h3>Gatos Clásicos</h3>
+                <p>Posters clásicos y elegantes de gatos</p>
+            </a>
+
+            <a href="categorias/fantasía.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-fantasía.jpg" alt="Gatos de Fantasía">
+                </div>
+                <h3>Fantasía</h3>
+                <p>Gatos en mundos mágicos y fantásticos</p>
+            </a>
+
+            <a href="categorias/aventura.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-aventura.jpg" alt="Gatos en Aventura">
+                </div>
+                <h3>Peliculas</h3>
+                <p>Gatos en emocionantes aventuras</p>
+            </a>
+
+            <a href="categorias/arte.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-arte.jpg" alt="Gatos Artísticos">
+                </div>
+                <h3>Arte</h3>
+                <p>Posters artísticos y creativos</p>
+            </a>
+
+            <a href="categorias/minimalista.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-minimalista.jpg" alt="Gatos Terrorificos">
+                </div>
+                <h3>Terrorificos</h3>
+                <p>Diseños terrorificos</p>
+            </a>
+
+            <a href="categorias/divertido.html" class="categoria-card">
+                <div class="categoria-imagen">
+                    <img src="images/categoria-divertido.jpg" alt="Gatos Divertidos">
+                </div>
+                <h3>Divertido</h3>
+                <p>Gatos cómicos y juguetones</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section class="productos" id="productos">
+        <h2>Nuestros Posters</h2>
+        <div class="productos-grid" id="productosGrid">
+            <!-- Los productos se generan con JavaScript -->
+        </div>
+    </section>
+
+    <!-- Carrito Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+                <p>Total: <span id="totalPrice">$0.00</span></p>
+                <button class="checkout-btn">Comprar Ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>Sobre MIAU POSTER</h2>
+       
+<h2>Misión</h2>
+<p>Llevar alegría y encanto a los hogares a través de pósters de gatos únicos y creativos. Celebrar la diversidad y el espíritu caprichoso de los felinos, ofreciendo diseños que inspiren sonrisas, enciendan conversaciones y añadan un toque de personalidad a cualquier espacio.</p>
+<h2>Visión</h2>
+<p>Ser una marca reconocida por la originalidad de nuestros pósters de gatos, convirtiéndonos en una opción para los amantes de los gatos que buscan expresiones artísticas y divertidas para sus paredes. Queremos promover el arte y el amor por estos adorables compañeros.</p>
+<h2>Valores</h2>
+<ul>
+    <li>Creatividad y Originalidad: Fomentamos que nuestra colección sea fresca, sorprendente y distintiva.</li>
+    <li>Pasión por los Gatos: Nuestro amor por los gatos es el corazón de nuestro negocio.</li>
+    <li>Satisfacción del Cliente: Valoramos a nuestros clientes y nos esforzamos por superar sus expectativas, ofreciendo un servicio excepcional y productos que aman.</li>
+</ul>
+    
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Contacto</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Tu Nombre" required>
+            <input type="email" placeholder="Tu Email" required>
+            <textarea placeholder="Tu Mensaje" rows="5" required></textarea>
+            <button type="submit" class="submit-btn">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 miauposter. Todos los derechos reservados. 🐱</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/miauuposter?igsh=ZjZzYjY3dmxocDFh" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61584130313322" target="_blank" >Facebook</a>
+
+            <h3>52+ 555555555555 </h3>
+            
+
+    <script src="js/main.js"></script>
+</body>
+</html>

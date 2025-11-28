@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasía - MIAU POSTER</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Header/Navegación -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <!-- Logo cambiado de emoji a imagen -->
+                <img src="../images/logo.png" alt="Paw Posters Logo" class="logo-img">
+                <h1><a href="../index.html" style="color: white; text-decoration: none;">MIAU POSTER</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#categorias">Categorías</a></li>
+                <li><a href="../index.html#about">Sobre Nosotros</a></li>
+                <li><a href="../index.html#contact">Contacto</a></li>
+            </ul>
+            <div class="cart-icon">
+                <span class="cart-count">0</span>
+                🛒
+            </div>
+        </nav>
+    </header>
+
+    <!-- Categoría Fantasía -->
+    <section class="categoria-seccion">
+        <h1>Gatos de Fantasía</h1>
+        <p class="categoria-descripcion">Sumérgete en mundos mágicos y fantásticos llenos de gatos encantadores. Diseños que despiertan la imaginación.</p>
+        
+        <div class="productos-grid" id="productosGrid"></div>
+    </section>
+
+    <!-- Carrito Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+                <p>Total: <span id="totalPrice">$0.00</span></p>
+                <button class="checkout-btn">Comprar Ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 miau Poster. Todos los derechos reservados. 🐱</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/miauuposter?igsh=ZjZzYjY3dmxocDFh">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61584130313322">Facebook</a>
+            
+    </footer>
+
+    <script>
+        const productosCategoria = [
+            {
+                id: 201,
+                nombre: "Gato Mago Encantado",
+                imagen: "../images/fantasía/poster-1.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 26.99,
+                descripcion: "Gato mago con poderes mágicos",
+            },
+            {
+                id: 202,
+                nombre: "Gato Hada",
+                imagen: "../images/fantasía/poster-2.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 24.99,
+                descripcion: "Delicada hada felina con alas brillantes",
+            },
+            {
+                id: 203,
+                nombre: "Gato Dragón",
+                imagen: "../images/fantasía/poster-3.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 28.99,
+                descripcion: "Gato dragón mitológico",
+            },
+            {
+                id: 204,
+                nombre: "Gato Unicornio",
+                imagen: "../images/fantasía/poster-4.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 27.99,
+                descripcion: "Gato unicornio mágico",
+            },
+            {
+                id: 205,
+                nombre: "Gato Fénix",
+                imagen: "../images/fantasía/poster-5.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 29.99,
+                descripcion: "Gato fénix en llamas mágicas",
+            },
+            {
+                id: 206,
+                nombre: "Gato en el Reino Encantado",
+                imagen: "../images/fantasía/poster-6.jpg", // <-- CAMBIAR RUTA AQUÍ
+                precio: 25.99,
+                descripcion: "Gato en un bosque mágico",
+            },
+        ];
+
+        const carrito = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarProductos();
+        });
+
+        function cargarProductos() {
+            const productosGrid = document.getElementById("productosGrid");
+            productosGrid.innerHTML = "";
+
+            productosCategoria.forEach((producto) => {
+                const productCard = document.createElement("div");
+                productCard.className = "product-card";
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${producto.imagen}" alt="${producto.nombre}" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${producto.nombre}</h3>
+                        <p class="product-description">${producto.descripcion}</p>
+                        <p class="product-price">$${producto.precio.toFixed(2)}</p>
+                        <button class="add-to-cart-btn" onclick="agregarAlCarrito(${producto.id})">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+                `;
+                productosGrid.appendChild(productCard);
+            });
+        }
+
+        function agregarAlCarrito(productoId) {
+            const producto = productosCategoria.find((p) => p.id === productoId);
+            const itemEnCarrito = carrito.find((item) => item.id === productoId);
+
+            if (itemEnCarrito) {
+                itemEnCarrito.cantidad++;
+            } else {
+                carrito.push({
+                    ...producto,
+                    cantidad: 1,
+                });
+            }
+
+            actualizarCarrito();
+            mostrarNotificacion("¡Producto agregado al carrito!");
+        }
+
+        function actualizarCarrito() {
+            const cartCount = document.querySelector(".cart-count");
+            const totalProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
+            cartCount.textContent = totalProductos;
+            actualizarModalCarrito();
+        }
+
+        function actualizarModalCarrito() {
+            const cartItems = document.getElementById("cartItems");
+            cartItems.innerHTML = "";
+
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+
+                const cartItem = document.createElement("div");
+                cartItem.className = "cart-item";
+                cartItem.innerHTML = `
+                    <div>
+                        <strong>${item.nombre}</strong><br>
+                        Cantidad: <input type="number" min="1" value="${item.cantidad}" 
+                            onchange="cambiarCantidad(${index}, this.value)" style="width: 50px;">
+                    </div>
+                    <div>
+                        $${subtotal.toFixed(2)}
+                        <button onclick="eliminarDelCarrito(${index})" style="margin-left: 1rem; cursor: pointer; background: #FF6B6B; color: white; border: none; padding: 5px 10px; border-radius: 5px;">
+                            ✕
+                        </button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            const totalPrice = document.getElementById("totalPrice");
+            totalPrice.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function cambiarCantidad(index, nuevaCantidad) {
+            if (nuevaCantidad > 0) {
+                carrito[index].cantidad = Number.parseInt(nuevaCantidad);
+            } else {
+                carrito.splice(index, 1);
+            }
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        document.querySelector(".cart-icon").addEventListener("click", () => {
+            document.getElementById("cartModal").style.display = "block";
+        });
+
+        function closeCart() {
+            document.getElementById("cartModal").style.display = "none";
+        }
+
+        window.onclick = (event) => {
+            const modal = document.getElementById("cartModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        function mostrarNotificacion(mensaje) {
+            const notificacion = document.createElement("div");
+            notificacion.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #FF8C00, #1E90FF);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 2000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notificacion.textContent = mensaje;
+            document.body.appendChild(notificacion);
+
+            setTimeout(() => {
+                notificacion.style.animation = "slideOut 0.3s ease-out";
+                setTimeout(() => notificacion.remove(), 300);
+            }, 2000);
+        }
+
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
